@@ -4,8 +4,8 @@ load_dotenv()
 
 from langchain_community.document_loaders import PyPDFLoader
 
-loader = PyPDFLoader("notes.txt")
+loader = PyPDFLoader("transformers.pdf")
 
 docs = loader.load()
 
-print(docs[0])
+print(docs[2].page_content)
