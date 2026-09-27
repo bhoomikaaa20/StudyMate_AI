@@ -5,7 +5,7 @@ load_dotenv()
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.document_loaders import TextLoader
-
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 model=ChatOpenAI(
     model='gpt-5-nano',
@@ -13,8 +13,25 @@ model=ChatOpenAI(
     max_tokens=1000
 )
 
+
 docs=TextLoader("document_loaders/notes.txt")
 data=docs.load()
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=100,
+    chunk_overlap=10,
+)
+
+
+chunks = splitter.split_documents(data)
+
+print(len(chunks))
+
+
+for ch in chunks:
+    print(ch.page_content)
+
+
 
 
 template=ChatPromptTemplate.from_messages(

@@ -10,7 +10,6 @@ data = docs.load()
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=10,
     chunk_overlap=1,
-    separators=[""]
 )
 
 chunks = splitter.split_documents(data)
