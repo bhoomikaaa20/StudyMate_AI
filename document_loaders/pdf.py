@@ -4,7 +4,7 @@ load_dotenv()
 
 from langchain_community.document_loaders import PyPDFLoader
 
-loader = TextLoader("notes.txt")
+loader = PyPDFLoader("notes.txt")
 
 docs = loader.load()
 
