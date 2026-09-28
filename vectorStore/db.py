@@ -5,23 +5,11 @@ load_dotenv()
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
+from langchain_community.document_loaders import PyPDFLoader
 
-docs = [
-    Document(
-        page_content="Python is a programming language.",
-        metadata={"source": "doc1", "topic": "python"}
-    ),
+loader = PyPDFLoader("transformers.pdf")
 
-    Document(
-        page_content="Machine learning allows computers to learn from data.",
-        metadata={"source": "doc2", "topic": "machine learning"}
-    ),
-
-    Document(
-        page_content="Deep learning uses neural networks.",
-        metadata={"source": "doc3", "topic": "deep learning"}
-    )
-]
+docs = loader.load()
 
 
 
@@ -30,7 +18,7 @@ embedding_model=OpenAIEmbeddings()
 vector_store=Chroma.from_documents(
     documents=docs,
     embedding=embedding_model,
-    persist_directory="chroma-database"   
+    persist_directory="./chroma-database"   
 )
 
 result=vector_store.similarity_search("ML allows what?",k=2)
