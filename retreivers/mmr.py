@@ -41,7 +41,7 @@ mmr_search_docs=vector_store.as_retriever(
 
 mmr_docs=mmr_search_docs.invoke("What are python libraries")
 
-print("============Similarity search results==============")
+print("============MMR search results==============")
 
 
 for i in mmr_docs:
