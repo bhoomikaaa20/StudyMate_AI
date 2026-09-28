@@ -7,17 +7,20 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 
 
-# 1. Load PDF
-loader = PyPDFLoader("document_loaders/transformers.pdf")
+# Load PDF
+loader = PyPDFLoader(
+    "document_loaders/transformers.pdf"
+)
+
 data = loader.load()
 
 print("Pages:", len(data))
 
 
-# 2. Split into chunks
+# Split
 splitter = RecursiveCharacterTextSplitter(
-    chunk_size=100,
-    chunk_overlap=10
+    chunk_size=500,
+    chunk_overlap=50
 )
 
 chunks = splitter.split_documents(data)
@@ -25,21 +28,23 @@ chunks = splitter.split_documents(data)
 print("Chunks:", len(chunks))
 
 
-# 3. Create embeddings
+# Embeddings
 embeddings = OpenAIEmbeddings(
     model="text-embedding-3-small"
 )
 
 
-# 4. Create Chroma vector database
-vector_store = Chroma(
+# Create vector DB and store chunks
+vector_store = Chroma.from_documents(
+    documents=chunks,
     collection_name="transformers",
-    embedding_function=embeddings,
+    embedding=embeddings,
     persist_directory="./chroma_db"
 )
 
-
-# 5. Store chunks
-vector_store.add_documents(chunks)
+print(
+    "Documents in Chroma:",
+    vector_store._collection.count()
+)
 
 print("Chunks stored successfully!")
