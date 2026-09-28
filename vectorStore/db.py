@@ -18,10 +18,10 @@ embedding_model=OpenAIEmbeddings()
 vector_store=Chroma.from_documents(
     documents=docs,
     embedding=embedding_model,
-    persist_directory="./chroma-database"   
+    persist_directory="../chroma-database"   
 )
 
-result=vector_store.similarity_search("ML allows what?",k=2)
+result=vector_store.similarity_search("what are transformers",k=2)
 
 for i in result:
     print(i.page_content)

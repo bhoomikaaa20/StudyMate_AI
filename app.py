@@ -1,46 +1,45 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-
-from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_community.document_loaders import TextLoader
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-model=ChatOpenAI(
-    model='gpt-5-nano',
-    temperature=0.7,
-    max_tokens=1000
-)
+from langchain_chroma import Chroma
 
 
-docs=TextLoader("document_loaders/notes.txt")
-data=docs.load()
+# 1. Load PDF
+loader = PyPDFLoader("document_loaders/transformers.pdf")
+data = loader.load()
 
+print("Pages:", len(data))
+
+
+# 2. Split into chunks
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=100,
-    chunk_overlap=10,
+    chunk_overlap=10
 )
-
 
 chunks = splitter.split_documents(data)
 
-print(len(chunks))
+print("Chunks:", len(chunks))
 
 
-for ch in chunks:
-    print(ch.page_content)
-
-
-
-
-template=ChatPromptTemplate.from_messages(
-    [("system", "You are a helpful AI Summarizer"),
-     ("human","{data}")]
+# 3. Create embeddings
+embeddings = OpenAIEmbeddings(
+    model="text-embedding-3-small"
 )
 
-prompt=template.format_messages(data=data[0].page_content)
 
-response=model.invoke(prompt)
+# 4. Create Chroma vector database
+vector_store = Chroma(
+    collection_name="transformers",
+    embedding_function=embeddings,
+    persist_directory="./chroma_db"
+)
 
-print(response.content)
+
+# 5. Store chunks
+vector_store.add_documents(chunks)
+
+print("Chunks stored successfully!")
