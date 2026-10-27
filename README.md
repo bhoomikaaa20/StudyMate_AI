@@ -1,202 +1,212 @@
-<div align="center">
-
 # 📚 StudyMate AI
 
-### Chat with your study material — grounded answers, with sources.
+### AI-Powered Study Assistant for Your Documents
 
-A **Retrieval-Augmented Generation (RAG)** web app that turns any PDF — lecture notes, research papers, textbooks — into an AI study companion you can ask questions to. Every answer comes only from your document, and you can open the exact passages it was built from.
+**StudyMate AI** is an AI-powered study assistant that allows students to upload their study materials as PDFs and interact with them through a conversational interface.
 
-![Python](https://img.shields.io/badge/Python-3.14-3776AB?logo=python&logoColor=white)
-![LangChain](https://img.shields.io/badge/LangChain-RAG-1C3C3C?logo=langchain&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-GPT--5%20nano-412991?logo=openai&logoColor=white)
-![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector%20Store-FF6F61)
-![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-FF4B4B?logo=streamlit&logoColor=white)
+Instead of manually searching through lengthy lecture notes, textbooks, or study materials, students can simply **ask questions about their documents and receive relevant, context-aware answers**.
 
-<img src="assets/screenshots/home.png" alt="StudyMate AI home screen" width="100%"/>
-
-</div>
+The application uses **Retrieval-Augmented Generation (RAG)** to retrieve relevant information from the uploaded documents before generating an answer with an LLM.
 
 ---
 
-## ✨ At a glance
+## 🎯 Problem
 
-| | |
+Students often spend a significant amount of time searching through large PDFs and lecture notes to find specific information.
+
+For example, if a student has a 100-page Machine Learning document and wants to know:
+
+> *"What is the difference between Ridge and Lasso regression?"*
+
+they would normally have to search through the document manually.
+
+StudyMate AI makes this process easier by allowing students to simply ask the question and get an answer based on their study material.
+
+---
+
+## 💡 Solution
+
+StudyMate AI transforms static study documents into an **interactive AI-powered knowledge base**.
+
+The user can:
+
+**Upload → Process → Ask → Retrieve → Get an Answer**
+
+The system searches the uploaded document for relevant information and uses that information to generate the response.
+
+This makes studying more interactive and reduces the effort required to find information within lengthy documents.
+
+---
+
+## ✨ Key Features
+
+- 📄 **PDF Upload** – Upload lecture notes, textbooks, research papers, and other study materials.
+- 💬 **Interactive AI Chat** – Ask natural-language questions about your documents.
+- 🔍 **Semantic Search** – Find relevant information based on meaning rather than only exact keywords.
+- 🧠 **RAG-Based Question Answering** – Retrieves relevant document information before generating an answer.
+- 🎯 **Relevant Context Retrieval** – Uses MMR-based retrieval to improve the relevance and diversity of retrieved information.
+- 🤖 **AI-Powered Responses** – Generates answers using OpenAI's GPT-5-nano.
+- 🔎 **Retrieved Content Visibility** – View the document sections used to generate an answer.
+- ♻️ **Duplicate Document Detection** – Prevents the same PDF from being processed repeatedly.
+- 💾 **Persistent Vector Storage** – Stores document embeddings using ChromaDB.
+- 🧹 **Chat Management** – Clear the conversation and start a new study session.
+
+---
+
+## 🧠 How It Works
+
+StudyMate AI follows a **Retrieval-Augmented Generation (RAG)** approach.
+
+```text
+        📄 Study Material
+               │
+               ▼
+        Document Processing
+               │
+               ▼
+       Text → Embeddings
+               │
+               ▼
+          🗃️ ChromaDB
+               │
+               │
+        💬 Student Question
+               │
+               ▼
+       🔍 Relevant Retrieval
+               │
+               ▼
+       📚 Relevant Context
+               │
+               ▼
+          🤖 LLM
+               │
+               ▼
+         💡 AI Answer
+```
+
+The document is converted into searchable representations and stored in a vector database.
+
+When a student asks a question, StudyMate AI retrieves the most relevant information from the document and provides it to the language model as context.
+
+The model then generates an answer based on the retrieved study material.
+
+---
+
+## 🎓 Who Is It For?
+
+StudyMate AI is designed primarily for **students and learners** who work with large amounts of digital study material.
+
+### Use cases include:
+
+- 📚 University lecture notes
+- 📝 Exam preparation
+- 📖 Textbooks
+- 🧪 Lab manuals
+- 📄 Research papers
+- 💻 Technical documentation
+- 🎓 Course materials
+- 📋 Certification preparation
+
+---
+
+## 🛠️ Technologies Used
+
+| Technology | Purpose |
 |---|---|
-| **Problem** | Studying from long PDFs is slow, and general-purpose chatbots hallucinate answers that aren't in your material. |
-| **Solution** | StudyMate indexes your PDF into a vector database and answers questions **strictly from the retrieved passages**, showing the sources for every answer. |
-| **What I built** | The end-to-end RAG pipeline (ingestion → chunking → embeddings → vector search → grounded generation) and a custom, product-style web UI on top of Streamlit. |
-| **Tech** | Python · LangChain · OpenAI (`gpt-5-nano`, `text-embedding-3-small`) · ChromaDB · Streamlit · custom HTML/CSS |
+| **Python** | Core application development |
+| **Streamlit** | Interactive web interface |
+| **LangChain** | RAG and LLM application framework |
+| **OpenAI GPT-5-nano** | AI response generation |
+| **OpenAI Embeddings** | Semantic representation of documents |
+| **ChromaDB** | Vector database |
+| **PyPDF** | PDF document processing |
 
 ---
 
-## 🖼️ Screenshots
+## 🌟 What Makes StudyMate AI Useful?
 
-### 1. Workspace: dashboard, knowledge base and chat
-A clean, web-app style landing page: live stats, a drag-and-drop knowledge base, the RAG pipeline explained, and one-click suggested questions.
+Traditional document search mainly looks for matching words.
 
-<img src="assets/screenshots/home.png" alt="Workspace" width="100%"/>
+StudyMate AI uses **semantic retrieval**, allowing it to identify relevant content based on the meaning of the student's question.
 
-### 2. Ask questions and get grounded answers
-Answers stream in token by token, formatted in Markdown. Conversation history is kept for the session.
+For example:
 
-<img src="assets/screenshots/chat.png" alt="Chat with grounded answers" width="100%"/>
+**Question:**
 
-<table>
-<tr>
-<td width="62%" valign="top">
+> *"How does regularization help prevent a model from overfitting?"*
 
-### 3. Transparent sources
-Every answer has a **Sources** panel showing the exact chunks retrieved from the vector database, with the file name and page number. You can verify each answer against the original text.
+Even if the exact wording does not appear in the document, the system can retrieve sections discussing regularization, model complexity, and overfitting based on their semantic relationship.
 
-<img src="assets/screenshots/sources.png" alt="Retrieved source chunks" width="100%"/>
-
-</td>
-<td width="38%" valign="top">
-
-### 4. Upload and index any PDF
-Upload a PDF and click **Process**. The app reports pages, chunks and total vectors. Re-uploading the same file is detected (MD5 hash), so nothing is indexed twice.
-
-<img src="assets/screenshots/upload.png" alt="PDF upload and indexing" width="100%"/>
-
-</td>
-</tr>
-</table>
+This makes the interaction more natural than traditional keyword-based document search.
 
 ---
 
-## 🧠 How it works
+## 🔎 Transparent AI Responses
 
-```mermaid
-flowchart LR
-    A[📄 PDF upload] --> B[MD5 hash<br/>duplicate check]
-    B --> C[PyPDFLoader<br/>extract pages]
-    C --> D[Recursive splitter<br/>500 chars · 50 overlap]
-    D --> E[OpenAI embeddings<br/>text-embedding-3-small]
-    E --> F[(ChromaDB<br/>persistent store)]
+StudyMate AI also allows users to inspect the **retrieved document content** behind an answer.
 
-    Q[💬 Question] --> R[MMR retriever<br/>k=3 · fetch_k=10]
-    F --> R
-    R --> P[Grounded prompt<br/>context + question]
-    P --> L[GPT-5 nano]
-    L --> ANS[✅ Answer + sources]
-```
-
-**Ingestion**
-1. **Upload:** the PDF is hashed with MD5. Files already processed in the session are skipped.
-2. **Load and chunk:** `PyPDFLoader` extracts pages, then `RecursiveCharacterTextSplitter` creates 500-character chunks with a 50-character overlap so context isn't lost at chunk boundaries.
-3. **Embed and store:** chunks are embedded with OpenAI `text-embedding-3-small` and persisted in **ChromaDB**. Each chunk gets a deterministic ID (`<hash>_<index>`) and keeps its source file name and page number.
-
-**Question answering**
-
-4. **Retrieve:** a **Maximal Marginal Relevance (MMR)** retriever fetches 10 candidates and picks the 3 that are most relevant *and* least redundant, so the LLM sees diverse evidence.
-5. **Generate:** a strict system prompt tells `gpt-5-nano` to answer **only** from the retrieved context, and otherwise to reply *"I could not find the answer in the document."* This keeps hallucinations down.
+This provides better visibility into where the information came from and helps students verify the generated response against their original study material.
 
 ---
 
-## 🚀 Features
+## 🚀 Future Enhancements
 
-- **PDF to knowledge base in one click**, with page, chunk and vector counts
-- **Duplicate detection** using content hashing
-- **Grounded answers** that refuse to make things up when the answer isn't in the document
-- **MMR retrieval** for relevant *and* diverse context
-- **Source citations** with file name and page for every answer
-- **Streaming responses** with a typing effect, plus an automatic fallback to a regular call
-- **Persistent vector store**, so indexed documents survive restarts
-- **Custom web-app UI:** sticky navbar, hero, stat cards, card layout, chat bubbles, suggested prompts, responsive layout. Streamlit's default chrome is fully restyled.
-- **Friendly error handling**, for example a clear message when the API key is invalid
+Planned improvements include:
 
----
-
-## 🛠️ Tech stack
-
-| Layer | Technology |
-|---|---|
-| LLM | OpenAI `gpt-5-nano` via `langchain-openai` |
-| Embeddings | OpenAI `text-embedding-3-small` |
-| Orchestration | LangChain (`langchain-core`, `langchain-community`, `langchain-text-splitters`) |
-| Vector database | ChromaDB (`langchain-chroma`), persisted to disk |
-| Document loading | `PyPDFLoader` (pypdf) |
-| Frontend | Streamlit + custom CSS design system (Inter font, design tokens, responsive grid) |
-| Config | `python-dotenv`, `.streamlit/config.toml` |
+- 📚 Multiple document support
+- 📑 Page-level citations
+- 📝 Automatic quiz generation
+- 🃏 AI-generated flashcards
+- 📊 Study progress tracking
+- 🎤 Voice-based interaction
+- 🌐 Support for additional document formats
+- 🧠 Improved conversational memory
+- ⚡ Streaming AI responses
+- 🔐 User authentication
+- ☁️ Cloud deployment
 
 ---
 
-## 📁 Project structure
-
-```
-StudyMateAI/
-├── app.py                  # Streamlit web app: RAG pipeline + page layout
-├── ui/
-│   ├── components.py       # Reusable UI building blocks (navbar, hero, stats, cards, sources)
-│   └── styles.css          # Design system: tokens, cards, chat bubbles, responsive rules
-├── .streamlit/config.toml  # Theme and server config
-├── main.py                 # CLI script: index document_loaders/transformers.pdf into ChromaDB
-├── db.py                   # CLI chatbot over the vector store (terminal RAG loop)
-├── document_loaders/       # Loader and text-splitter experiments + sample PDF
-├── retreivers/             # Retriever experiments (MMR, multi-query, arXiv)
-├── vectorStore/            # Vector store experiments
-├── chroma_db/              # Persisted Chroma vector database
-└── assets/screenshots/     # README images
-```
-
----
-
-## ⚙️ Getting started
+## ▶️ Getting Started
 
 ### Prerequisites
+
 - Python 3.14+
-- An [OpenAI API key](https://platform.openai.com/api-keys)
+- OpenAI API key
 
-### 1. Clone and install
+### Installation
+
 ```bash
-git clone https://github.com/bhoomikaaa20/StudyMate_AI.git
-cd StudyMate_AI
-
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# macOS / Linux
-source .venv/bin/activate
-
+git clone https://github.com/YOUR_USERNAME/StudyMateAI.git
+cd StudyMateAI
 pip install -r requirements.txt
 ```
-> Using [uv](https://github.com/astral-sh/uv)? Run `uv sync` instead.
 
-### 2. Add your API key
-Create a `.env` file in the project root:
-```env
-OPENAI_API_KEY=sk-...
+### Environment Setup
+
+Create a `.env` file and add your OpenAI API key:
+
+```text
+OPENAI_API_KEY=your_api_key
 ```
 
-### 3. (Optional) Pre-index the sample PDF
-```bash
-python main.py
-```
-This indexes *Attention Is All You Need* (`document_loaders/transformers.pdf`) so you can start asking questions right away.
+### Run the Application
 
-### 4. Run the app
 ```bash
 streamlit run app.py
 ```
-Open **http://localhost:8501**, upload a PDF (or use the pre-indexed one), and start asking questions.
 
-> 💡 Prefer the terminal? `python db.py` starts a command-line version of the same RAG chatbot.
-
----
-
-## 🔮 Roadmap
-
-- [ ] Multiple document formats (DOCX, TXT, web URLs)
-- [ ] Per-document filtering and a document manager
-- [ ] Inline citations inside the answer text
-- [ ] Conversation-aware retrieval (follow-up questions)
-- [ ] Quiz and flashcard generation from your material
-- [ ] Deploy to Streamlit Community Cloud
+The StudyMate AI interface will open in your browser.
 
 ---
 
 ## 👩‍💻 Author
 
-**bhoomikaaa20** · [GitHub](https://github.com/bhoomikaaa20)
+### Bhoomika Somavarapu
 
-If you found this project interesting, consider giving it a ⭐!
+MSc Artificial Intelligence Student
+
+**Interested in:** Artificial Intelligence · Generative AI · RAG · LLM Applications · Machine Learning
+
+⭐ **If you find StudyMate AI interesting, consider giving the repository a star!**
