@@ -1,0 +1,16 @@
+[theme]
+base = "light"
+primaryColor = "#5B4BF5"
+backgroundColor = "#F6F7FB"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#0F172A"
+font = "sans serif"
+
+[client]
+toolbarMode = "minimal"
+showSidebarNavigation = false
+
+[server]
+maxUploadSize = 50
+# The installed `transformers` package floods the default file watcher with import errors
+fileWatcherType = "none"
