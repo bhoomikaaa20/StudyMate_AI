@@ -154,15 +154,6 @@ StudyMateAI/
 
 ---
 
-## 🔮 What's next
-
-- Support for DOCX, TXT and web pages
-- Follow-up questions that remember the conversation
-- Quiz and flashcard generation from your material
-- Public deployment on Streamlit Community Cloud
-
----
-
 <p align="center">
   Built by <a href="https://github.com/bhoomikaaa20"><b>bhoomikaaa20</b></a> · If you like this project, please give it a ⭐
 </p>
